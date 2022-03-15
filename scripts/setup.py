@@ -3,9 +3,11 @@
 from netmiko import ConnectHandler, file_transfer
 from netmiko import SCPConn
 
+pc_num = 5 # Our PC is 5
+
 device_A = {
     'device_type': 'linux',
-    'ip': '192.168.109.155', # Our PC is 5
+    'ip': f"192.168.109.15{pc_num}", 
     'username': 'theuser',
     'use_keys': True,
     'key_file': './ssh/keys/privA.rsa'

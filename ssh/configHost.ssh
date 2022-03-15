@@ -1,0 +1,12 @@
+Host vma
+  HostName 192.168.109.155
+  IdentityFile ~/.ssh/keys/privA.rsa
+  IdentitiesOnly yes
+  User theuser
+
+Host vmb
+  HostName 192.168.88.101
+  IdentityFile ~/.ssh/keys/privBC.rsa
+  IdentitiesOnly yes 
+  User theuser
+  ProxyJump vma
