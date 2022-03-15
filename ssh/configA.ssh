@@ -1,0 +1,11 @@
+Host vmb
+Hostname 192.168.88.101
+IdentityFile ~/.ssh/privBC.rsa
+IdentitiesOnly yes
+User theuser
+
+Host vmc
+Hostname 192.168.88.102
+IdentityFile ~/.ssh/privBC.rsa
+IdentitiesOnly yes
+User theuser
