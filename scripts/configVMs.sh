@@ -23,6 +23,7 @@ ssh -t vmb 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-k
 ssh -t vmb 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
 ssh -t vmb 'sudo apt-get update'
 ssh -t vmb 'sudo apt-get install -y docker-ce docker-ce-cli containerd.io'
+ssh -t vmb 'sudo apt-get install -y docker-compose'
 
 ssh -t vmb 'sudo usermod -G docker -a theuser'
 ssh -t vmb 'sudo systemctl enable docker.service; sudo systemctl start docker.service'

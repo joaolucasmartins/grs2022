@@ -1,0 +1,41 @@
+version: '2'
+services:
+  app1:
+    build: ./app1
+    container_name: app1
+    networks:
+      net:
+        ipv4_address: 10.0.2.101
+    ports:
+    - "5001:5000"
+  app2:
+    build: ./app2
+    container_name: app2
+    networks:
+      net:
+        ipv4_address: 10.0.2.102
+    ports:
+    - "5002:5000"
+  nginx:
+    build: ./nginx
+    container_name: server
+    cap_add:
+      - NET_ADMIN
+    networks:
+      net:
+        ipv4_address: 10.0.2.100
+    ports:
+    - "8080:80"
+    depends_on:
+      - app1
+      - app2
+
+networks:
+ net:
+    driver: macvlan
+    driver_opts:
+      parent: ens20
+    ipam:
+      config:
+        - subnet: "10.0.2.0/24"
+          gateway: "10.0.2.1"
