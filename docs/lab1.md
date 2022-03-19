@@ -79,6 +79,7 @@ Afterwards, install docker by following the steps in this [guide](https://gist.g
 - **VM-A**
   - `sudo ip a a 192.168.88.100/24 dev ens19`
   - `sudo ip link set ens19 up`
+  - `sudo ip link set ens20 up`
   - Proxmox **>** Hardware **>** Add Network **>** vmbr0 and vmbr4
 
 - **VM-B**
