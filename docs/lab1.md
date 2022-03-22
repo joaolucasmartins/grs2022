@@ -77,10 +77,31 @@ Afterwards, install docker by following the steps in this [guide](https://gist.g
 ### Instructions for when you Nuke the VMs
 
 - **VM-A**
+  - Proxmox **>** Hardware **>** Add Network **>** vmbr0 and vmbr4
   - `sudo ip a a 192.168.88.100/24 dev ens19`
   - `sudo ip link set ens19 up`
-  - `sudo ip link set ens20 up`
-  - Proxmox **>** Hardware **>** Add Network **>** vmbr0 and vmbr4
 
 - **VM-B**
-  - Proxmox **>** Hardware **>** Add Network **>** vmbr4
+  - Proxmox **>** Hardware **>** Add Network **>** vmbr4, vmbr1 and vmbr2
+
+- **VM-C**
+  - Proxmox **>** Hardware **>** Add Network **>** vmbr1, vmbr4
+
+### Acessing Mikrotik router
+- User: admin
+- Password: [blank] 
+
+### Port Forwarding to access switch
+- LocalForward (SSH config file)
+- `ssh -L 8888:192.168.88.1:80 vma` (Acessing port 80 on switch through VM-A)
+
+## VM-B
+- Set Interfaces UP (ens19 & ens20)
+- `sudo ip link set ens19`
+- `sudo ip link set ens20`
+- `sudo ip a a 10.0.1.99/24 dev ens19`
+
+## VM-C
+- Set Interfaces UP (ens19)
+- `sudo ip link set ens19`
+- `sudo ip r a 10.0.2.0/24 via 10.0.1.254`
