@@ -7,7 +7,7 @@ Host vma
 Host vmb
   HostName 192.168.88.101
   IdentityFile ~/.ssh/keys/privBC.rsa
-  IdentitiesOnly yes
+  IdentitiesOnly yes 
   User theuser
   ProxyJump vma
 
@@ -29,3 +29,17 @@ Host switch-ssh
   HostName 192.168.88.1
   User admin
   ProxyJump vma
+
+Host vmb-nagios
+  HostName 192.168.109.155
+  IdentityFile ~/.ssh/keys/privA.rsa
+  IdentitiesOnly yes
+  User theuser
+  LocalForward 8888 192.168.88.101:8080
+
+Host vmc-nagios
+  HostName 192.168.109.155
+  IdentityFile ~/.ssh/keys/privA.rsa
+  IdentitiesOnly yes
+  User theuser
+  LocalForward 8888 192.168.88.102:8080

@@ -105,3 +105,14 @@ Afterwards, install docker by following the steps in this [guide](https://gist.g
 - Set Interfaces UP (ens19)
 - `sudo ip link set ens19`
 - `sudo ip r a 10.0.2.0/24 via 10.0.1.254`
+
+# Monitoring
+
+## Start Nagios Server
+
+- Build Nagios image
+  - `docker build -t nagios-c .`
+- Run Nagios in **VM-B**
+  - `docker run --name nagios -d --net server_net --ip 10.0.2.99 -p 0.0.0.0:8080:80 nagios-c # VM-B`
+- Run Nagios in **VM-C**
+  - `docker run --name nagios -d -p 0.0.0.0:8080:80 nagios-c # VM-C`
