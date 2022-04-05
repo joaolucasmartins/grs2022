@@ -116,3 +116,11 @@ Afterwards, install docker by following the steps in this [guide](https://gist.g
   - `docker run --name nagios -d --net server_net --ip 10.0.2.99 -p 0.0.0.0:8080:80 nagios-c # VM-B`
 - Run Nagios in **VM-C**
   - `docker run --name nagios -d -p 0.0.0.0:8080:80 nagios-c # VM-C`
+
+## Logs
+
+### **Nagios**
+Inside VM-C, using the command `sudo tcpdump -i ens19 -w nagios.pcap`, we were able to capture the traffic generated from Nagios. It's a active measurement, of course, as there's packet injection inside the network.
+
+After that, download the file to the host machine using the command `scp vmc:~/nagios.pcap nagios.pcap`.
+Opening this file with wireshark will first show an active measurement for the Nagios' `check_load` command. The entire connection is encrypted. In between, there are also some ARP requests, probably to refresh the cache. We also see a bunch if `pings`. This is so that Nagios can know if `10.0.2.100` is UP/DOWN. Finally, the last TCP stream concerns the `check_http` command.
