@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Passing Private key to VM-A
 scp ./ssh/keys/privBC.rsa vma:~/.ssh/
 
@@ -11,10 +13,14 @@ scp confA.sh vma:~
 scp -r client/ vmb:~
 scp -r router/ vmb:~
 scp -r server/ vmb:~
+scp -r dhcp-server/ vmb:~
+scp -r proxy/ vmb:~
+scp -r client-proxy-test/ vmb:~
 scp confB.sh vmb:~
 
 # Passing confs. to VM-C
 scp confC.sh vmc:~
+scp -r nagios/ vmc:~
 
 # Config VM-A
 ssh -t vma 'sh confA.sh'

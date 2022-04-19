@@ -29,7 +29,30 @@ services:
     depends_on:
       - app1
       - app2
-
+  proxy:
+    build: ../proxy
+    container_name: squid
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ~/proxy/squid.conf:/etc/squid/squid.conf
+  
+  client-proxy-test:
+    build: ../client-proxy-test
+    container_name: client-proxy-test
+    cap_add:
+      - NET_ADMIN
+    entrypoint: /bin/sh -c "tail -f /dev/null"
+  
+  # In order to run this, the client_net would have to be created in this docker-compose.yml. But as it's version 2, we would have to make too many changes. 
+  # As a quick solution we use a sleep 5 in the entrypoint.
+  dhcp:
+    build: ../dhcp-server
+    container_name: dhcp-server
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ~/dhcp-server/dhcp.conf:/etc/dhcp/dhcpd.conf
 networks:
  net:
     driver: macvlan
