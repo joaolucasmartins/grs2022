@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sudo ip link set ens19 up
 sudo ip a a 10.0.1.200/24 dev ens19
 sudo ip r a 10.0.2.0/24 via 10.0.1.254
@@ -15,3 +17,9 @@ sudo apt-get install -y docker-compose
 sudo usermod -G docker -a theuser
 sudo systemctl enable docker.service; sudo systemctl start docker.service
 sudo systemctl enable containerd.service; sudo systemctl start containerd.service
+
+# Run Nagios Server
+sudo docker stop nagios
+sudo docker rm nagios
+docker build -t nagios ./nagios
+docker run --name nagios -d -p 0.0.0.0:8080:80 nagios-c

@@ -124,3 +124,9 @@ Inside VM-C, using the command `sudo tcpdump -i ens19 -w nagios.pcap`, we were a
 
 After that, download the file to the host machine using the command `scp vmc:~/nagios.pcap nagios.pcap`.
 Opening this file with wireshark will first show an active measurement for the Nagios' `check_load` command. The entire connection is encrypted. In between, there are also some ARP requests, probably to refresh the cache. We also see a bunch if `pings`. This is so that Nagios can know if `10.0.2.100` is UP/DOWN. Finally, the last TCP stream concerns the `check_http` command.
+
+# DHCP
+- Build DHCP Server image:
+  - `docker build -t dhcp-image .`
+- Run DHCP Server container:
+  - `docker run -d --rm --net client_net --ip 10.0.1.2 --name dhcp-server --cap-add=NET_ADMIN -v $(pwd)/dhcp.conf:/etc/dhcp/dhcpd.conf dhcp-image`
