@@ -38,12 +38,17 @@ services:
       - ~/proxy/squid.conf:/etc/squid/squid.conf
   
   client-proxy-test:
-    build: ../client-proxy-test
+    build: ../netubuntu
     container_name: client-proxy-test
     cap_add:
+      - NET_ADMIN  
+      
+  external_host:
+    build: ../netubuntu
+    container_name: external_host
+    cap_add:
       - NET_ADMIN
-    entrypoint: /bin/sh -c "tail -f /dev/null"
-  
+
   # In order to run this, the client_net would have to be created in this docker-compose.yml. But as it's version 2, we would have to make too many changes. 
   # As a quick solution we use a sleep 5 in the entrypoint.
   dhcp:

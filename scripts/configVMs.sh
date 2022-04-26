@@ -15,7 +15,7 @@ scp -r router/ vmb:~
 scp -r server/ vmb:~
 scp -r dhcp-server/ vmb:~
 scp -r proxy/ vmb:~
-scp -r client-proxy-test/ vmb:~
+scp -r netubuntu/ vmb:~
 scp confB.sh vmb:~
 
 # Passing confs. to VM-C
