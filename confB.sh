@@ -1,7 +1,11 @@
 #!/bin/bash
 
+sudo sysctl net.ipv4.conf.all.forwarding=1
+sudo iptables -P FORWARD ACCEPT
 sudo ip route del default
 sudo ip r a default via 192.168.88.100
+sudo ip r a 10.0.2.0/24 via 172.31.255.253
+sudo ip r a 10.0.1.0/24 via 172.31.255.253
 sudo sed -i "s/nameserver 127.0.0.53/nameserver 8.8.8.8/g" /etc/resolv.conf
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -23,3 +27,6 @@ sudo ip l s ens20 up
 ./client/run.sh
 ./router/run.sh
 sudo ip a a 10.0.1.99/24 dev ens19
+sudo docker build -t netubuntu ~/netubuntu
+sudo docker run -d --net public_net --ip 172.31.255.100 --cap-add=NET_ADMIN --name external_host netubuntu
+sudo docker exec external_host /bin/bash -c 'ip r a 10.0.0.0/8 via 172.31.255.253'
