@@ -1,0 +1,46 @@
+@startuml
+nwdiag {
+    network load_balancers {
+      proxy;
+      W1;
+      W2;
+      W3;
+    }
+    network internal {
+      R1 [shape = interface]
+      db [address = "w.w.w.z", shape = database];
+      DHCP [shape = rectangle];
+      Employee1 [shape = entity]
+      Employee2 [shape = entity]
+      Employee3 [shape = entity]
+    }
+
+    network DMZ1 {
+      proxy [shape = rectangle];
+      VPN1 [shape = rectangle]
+      firewall1 [shape = queue];
+      ER1 [shape = interface];
+      R1 [shape = interface];
+    }
+
+    ER1 [shape = interface];
+    ER1 -- internet;
+    internet [ shape = cloud];
+    internet -- ER2;
+
+    network DMZ2 {
+      ER2 [shape = interface]
+      firewall2 [shape = queue]
+      R2 [shape = interface]
+      DNS [shape = rectangle]
+      VPN2 [shape = rectangle]
+    }
+
+    network internal {
+      R2 [shape = interface]
+      NetManager1 [shape = entity]
+      NetManager2 [shape = entity]
+      NetManager3 [shape = entity]
+    }
+}
+@enduml
