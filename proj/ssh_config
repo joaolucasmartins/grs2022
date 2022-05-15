@@ -1,0 +1,19 @@
+Host vma
+Hostname 192.168.109.155
+IdentityFile ~/.ssh/grs_rsa
+IdentitiesOnly yes
+User theuser
+
+Host vmb
+Hostname 192.168.88.101
+IdentityFile ~/.ssh/grs_target
+IdentitiesOnly yes
+User theuser
+ProxyCommand ssh vma nc %h %p 
+
+Host vmc
+Hostname 192.168.88.102
+IdentityFile ~/.ssh/grs_target
+IdentitiesOnly yes
+User theuser
+ProxyCommand ssh vma nc %h %p
