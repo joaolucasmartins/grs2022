@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  netmanager1: 
+    build: ./netubuntu
+    container_name: netmanager1
+    networks:
+      internal_C:
+        ipv4_address: 10.1.2.10
+  router_c: 
+    build: ./netubuntu
+    container_name: router_c
+    networks:
+      internal_C:
+        ipv4_address: 10.1.2.1
+      DMZ_C:
+        ipv4_address: 10.1.1.2
+  
+networks:
+  internal_C:
+    driver: bridge
+    name: internal_C
+    ipam:
+      config:
+        - subnet: "10.1.2.0/24"
+          gateway: "10.1.2.254"
+  DMZ_C:
+    driver: bridge
+    name: DMZ_C
+    ipam:
+      config:
+        - subnet: "10.1.1.0/24"
+          gateway: "10.1.1.254"
