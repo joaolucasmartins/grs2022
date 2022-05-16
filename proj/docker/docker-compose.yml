@@ -1,20 +1,26 @@
-version: '3.8'
+version: "3.8"
 services:
-  netmanager1: 
+  netmanager1:
     build: ./netubuntu
     container_name: netmanager1
+    cap_add:
+      - NET_ADMIN
+    command: ["10.1.2.254", "10.1.2.1"]
     networks:
       internal_C:
         ipv4_address: 10.1.2.10
-  router_c: 
+  router_c:
     build: ./netubuntu
     container_name: router_c
+    cap_add:
+      - NET_ADMIN
+    command: ["10.1.1.254", "10.1.1.1"]
     networks:
       internal_C:
         ipv4_address: 10.1.2.1
       DMZ_C:
         ipv4_address: 10.1.1.2
-  
+
 networks:
   internal_C:
     driver: bridge
