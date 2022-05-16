@@ -22,6 +22,12 @@ services:
         ipv4_address: 10.1.2.1
       DMZ_C:
         ipv4_address: 10.1.1.2
+  dhcp_c:
+    build: ./dhcp
+    container_name: dhcp_c
+    networks:
+      internal_C:
+        ipv4_address: 10.1.2.2
 
 networks:
   internal_C:
