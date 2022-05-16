@@ -12,6 +12,8 @@ services:
   router_c:
     build: ./netubuntu
     container_name: router_c
+    sysctls:
+      - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
     command: ["10.1.1.254", "10.1.1.1"]
