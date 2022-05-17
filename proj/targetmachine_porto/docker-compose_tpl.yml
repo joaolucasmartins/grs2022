@@ -10,7 +10,7 @@ services:
       internal_C:
         ipv4_address: netmanager1_internal_c
   router_c:
-    build: ../docker/netubuntu
+    build: ./netubuntu
     container_name: router_c
     sysctls:
       - net.ipv4.ip_forward=1

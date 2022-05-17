@@ -12,8 +12,15 @@ ssh vmc 'bash' <"../helper_scripts/setup_compose_service.sh"
 
 # Enable proxmox interface to create bridge with
 # TODO Don't hardcode this interface
-ssh vmc 'bash -s' < 'sudo ip link set ens19 up'
+ssh vmc 'sudo ip link set ens19 up'
 
 # Copy images to vmc
-scp -r ../docker/netubuntu vmc:~
-scp -r ../docker/dhcp vmc:~
+ssh vmc 'rm -r ~/netubuntu; rm -r ~/dhcp'
+echo "wat"
+scp -r ../docker/netubuntu vmc:/home/theuser/
+scp -r ../docker/dhcp vmc:/home/theuser/
+
+# Gen compose and copy to vmc
+python3 network_conf.py netarchitecture.json docker-compose_tpl.yml | ssh vmc 'tee docker-compose.yml' > /dev/null
+
+ssh vmc 'bash' <"./setup_containers.sh"
