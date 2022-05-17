@@ -27,9 +27,40 @@ networks:
       config:
         - subnet: "10.0.1.0/24"
           gateway: "10.0.1.254"
+  pubnet_B:
+    name: pubnet_B
+    ipam:
+      config:
+        - subnet: "172.31.255.0/24"
+          gateway: "172.31.255.254"
 
 services:
+  # PUBLIC NET
+  er_b:
+    build: ./edge_router
+    container_name: er_b
+    sysctls:
+      - net.ipv4.ip_forward=1
+    cap_add:
+      - NET_ADMIN
+    networks:
+      dmz_B:
+        ipv4_address: 10.0.1.1
+      pubnet_B:
+        ipv4_address: 172.31.255.253
+    command: ["172.31.255.254", "10.0.1.0/24", "10.0.0.0/8", "10.0.1.2"]
+  external_host_b:
+    build: ./router
+    container_name: external_host_b
+    cap_add:
+      - NET_ADMIN
+    networks:
+      pubnet_B:
+        ipv4_address: 172.31.255.100
+    command: ["172.31.255.253"]
+
   # DMZ
+  ## ROUTERS
   r_b:
     build: ./router
     container_name: r_b
@@ -42,7 +73,7 @@ services:
         ipv4_address: 10.0.2.1
       dmz_B:
         ipv4_address: 10.0.1.2
-    command: ["10.0.1.254", "10.0.1.1"]
+    command: ["10.0.1.1"]
   ## WEBAPP (deals with webapp net)
   webapp_worker1:
     build: ./webapp_worker
@@ -66,7 +97,7 @@ services:
         ipv4_address: 10.0.3.1
       dmz_B:
         ipv4_address: 10.0.1.5
-    command: ["10.0.1.254", "10.0.1.2"]
+    command: ["10.0.1.2"]
 
   # INTERNAL
   dhcp_b:
