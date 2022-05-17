@@ -35,5 +35,5 @@ echo "Testing docker installation"
 sudo docker version
 
 # test docker-compose
-echo "Testing docker installation"
+echo "Testing docker compose installation"
 sudo docker-compose version
