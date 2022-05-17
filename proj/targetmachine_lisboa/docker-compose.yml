@@ -111,12 +111,16 @@ services:
   webdev1:
     build: ./webdev
     container_name: webdev1
+    cap_add:
+      - NET_ADMIN
     networks:
       internal_B:
         ipv4_address: 10.0.2.27
   webdev2:
     build: ./webdev
     container_name: webdev2
+    cap_add:
+      - NET_ADMIN
     networks:
       internal_B:
         ipv4_address: 10.0.2.28
