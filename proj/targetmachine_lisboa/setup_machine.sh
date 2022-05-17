@@ -10,11 +10,9 @@ echo "Install docker"
 ssh vmb 'bash' <"../helper_scripts/installdocker.sh"
 
 echo "Setup docker compose service"
-scp -r "../docker/docker-compose@.service" vmb:~
+scp "../docker/docker-compose@.service" vmb:~
 ssh vmb 'bash' <"../helper_scripts/setup_compose_service.sh"
 
 echo "Copy docker containers to the machine"
-scp -r "../docker/router" vmb:~
-scp -r "../docker/webapp" vmb:~
-scp -r "../docker/webapp_worker" vmb:~
-ssh vmb 'sudo mkdir -p /etc/docker/compose'
+scp -r "../docker/router" "../docker/webapp" "../docker/webapp_worker" "docker-compose.yml" vmb:~
+ssh vmb 'bash' <"./setup_containers.sh"
