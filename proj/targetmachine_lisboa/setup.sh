@@ -1,19 +1,18 @@
 #!/bin/sh
 
-# Clean up
-echo "Clean up"
-sudo systemctl stop docker-compose@lisboa
-#sudo docker rm -f "r1" "webapp" "webapp_worker1" "webapp_worker2"
-#sudo docker network rm "webapp_net" "internal_net" "dmz_net"
+echo "Disable automatic updates (so we can reliably install docker)"
+#ssh vmb 'bash' <"../helper_scripts/disable-automatic-updates.sh"
 
-# Create networks
-echo "Creating networks"
-sudo ip link set ens19 up
+echo "Config network"
+ssh vmb 'bash' <"../helper_scripts/targetmachine_network.sh"
 
-# Deploy router
-echo "Deploying router"
-sudo docker run -d --name "r1" router 
-sudo systemctl start docker-compose@lisboa
+echo "Install docker"
+ssh vmb 'bash' <"../helper_scripts/installdocker.sh"
 
-echo "Test"
-sudo docker exec r1 curl 10.0.1.5
+echo "Setup docker compose service"
+scp "../docker/docker-compose@.service" vmb:~
+ssh vmb 'bash' <"../helper_scripts/setup_compose_service.sh"
+
+echo "Copy docker containers to the machine"
+scp -r "../docker/router" "../docker/webapp" "../docker/webapp_worker" "docker-compose.yml" vmb:~
+ssh vmb 'bash' <"./setup_containers.sh"
