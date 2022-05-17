@@ -9,5 +9,15 @@ echo "Deploy containers"
 sudo ip link set ens19 up
 sudo systemctl start docker-compose@lisboa
 
-echo "Test (curl the webapp proxy)"
+# Tests
+echo "Run tests:"
+
+printf "\t1. curl the webapp proxy"
 sudo docker exec "r_b" curl 10.0.1.5
+
+printf "\t2. webdevs getting leases from DHCP server"
+#sudo docker exec "webdev1" /bin/sh -c "dhcpcd -t 1 2>&1 | grep '.* leased .* for .* seconds'"
+#sudo docker exec "webdev2" /bin/sh -c "dhcpcd -t 1 2>&1 | grep '.* leased .* for .* seconds'"
+#
+#printf "\t3. access to pgadmin"
+#sudo docker exec "webdev1" curl 10.0.2.3

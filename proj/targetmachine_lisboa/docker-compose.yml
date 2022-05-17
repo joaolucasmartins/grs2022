@@ -107,6 +107,19 @@ services:
     networks:
       internal_B:
         ipv4_address: 10.0.2.3
+  ## EMPLOYEES
+  webdev1:
+    build: ./webdev
+    container_name: webdev1
+    networks:
+      internal_B:
+        ipv4_address: 10.0.2.27
+  webdev2:
+    build: ./webdev
+    container_name: webdev2
+    networks:
+      internal_B:
+        ipv4_address: 10.0.2.28
 
 volumes:
   db-data:
