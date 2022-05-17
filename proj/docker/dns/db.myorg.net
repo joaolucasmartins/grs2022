@@ -1,0 +1,15 @@
+$TTL 2
+@       IN      SOA   ns.myorg.net. admin.myorg.net. (
+                2008111001
+                8H
+                2H
+                4W
+                1D)
+
+@       IN      NS    ns.myorg.net.
+
+@       IN      A     10.9.0.180
+;www    IN      A     10.9.0.180
+www     IN      A     192.168.60.80
+ns      IN      A     10.9.0.153
+*       IN      A     10.9.0.100
