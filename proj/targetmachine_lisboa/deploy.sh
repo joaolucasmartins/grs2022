@@ -25,9 +25,9 @@ printf "2. webdevs getting leases from DHCP server\n"
 echo "Sleeping for 15 seconds, so the addresses have time to be acquired..."
 sleep 15
 echo "Webdev 1 DHCP"
-test_cmd sudo docker exec "webdev1" /bin/sh -c "ip a | grep global | awk '{print \$2}'"
+sudo docker exec "webdev1" /bin/sh -c "ip a | grep global | awk '{print \$2}'"
 echo "Webdev 2 DHCP"
-test_cmd sudo docker exec "webdev2" /bin/sh -c "ip a | grep global | awk '{print \$2}'"
+sudo docker exec "webdev2" /bin/sh -c "ip a | grep global | awk '{print \$2}'"
 echo
 
 printf "3. access to webdev pgadmin\n"

@@ -11,5 +11,103 @@
         "ip": "172.31.255.253"
       }
     ]
+  },
+  {
+    "name": "external_host_b",
+    "networks": [
+      {
+        "name": "pubnet_b",
+        "ip": "172.31.255.100"
+      }
+    ]
+  },
+  {
+    "name": "r_b",
+    "networks": [
+      {
+        "name": "internal_b",
+        "ip": "10.0.2.1"
+      },
+      {
+        "name": "dmz_b",
+        "ip": "10.0.1.2"
+      }
+    ]
+  },
+  {
+    "name": "webapp_worker1",
+    "networks": [
+      {
+        "name": "webapp_b",
+        "ip": "10.0.3.2"
+      }
+    ]   
+  },
+  {
+    "name": "webapp_worker2",
+    "networks": [
+      {
+        "name": "webapp_b",
+        "ip": "10.0.3.3"
+      }
+    ]
+  },
+  {
+    "name": "webapp",
+    "networks": [
+      {
+        "name": "webapp_b",
+        "ip": "10.0.3.1"
+      },
+      {
+        "name": "dmz_b",
+        "ip": "10.0.1.5"
+      }
+    ]
+  },
+  {
+    "name": "dhcp_b",
+    "networks": [
+      {
+        "name": "internal_b",
+        "ip": "10.0.2.4"
+      }
+    ]
+  },
+  {
+    "name": "postgres",
+    "networks": [
+      {
+        "name": "internal_b",
+        "ip": "10.0.2.2"
+      }
+    ]
+  },
+  {
+    "name": "pgadmin",
+    "networks": [
+      {
+        "name": "internal_b",
+        "ip": "10.0.2.3"
+      }
+    ]
+  },
+  {
+    "name": "webdev1",
+    "networks": [
+      {
+        "name": "internal_b",
+        "ip": "10.0.2.27"
+      }
+    ]
+  },
+  {
+    "name": "webdev2",
+    "networks": [
+      {
+        "name": "internal_b",
+        "ip": "10.0.2.28"
+      }
+    ]
   }
 ]
