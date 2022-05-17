@@ -3,6 +3,7 @@
 ip_default_gateway="$1"
 ip_new_default_gateway="$2"
 
+# Set default gateway
 ip r d default via "$ip_default_gateway"
 ip r a default via "$ip_new_default_gateway"
 

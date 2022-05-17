@@ -3,6 +3,10 @@
     "name": "netmanager1",
     "entrypoints": [
       {
+        "path": "./setDNS.sh",
+        "commands": ["10.1.1.5"]
+      },
+      {
         "path": "./netconfig.sh",
         "commands": ["10.1.2.254", "10.1.2.1"]
       }
@@ -39,6 +43,21 @@
       {
         "name": "internal_c",
         "ip": "10.1.2.2"
+      }
+    ]
+  },
+  {
+    "name": "dns",
+    "entrypoints": [
+      {
+        "path": "./configDNS.sh",
+        "commands": ["10.1.2.0/24", "10.1.1.2"]
+      }
+    ],
+    "networks": [
+      {
+        "name": "dmz_c",
+        "ip": "10.1.1.5"
       }
     ]
   }

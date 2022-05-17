@@ -16,9 +16,10 @@ ssh vmc 'sudo ip link set ens19 up'
 
 # Copy images to vmc
 ssh vmc 'rm -r ~/netubuntu; rm -r ~/dhcp'
-echo "wat"
-scp -r ../docker/netubuntu vmc:/home/theuser/
-scp -r ../docker/dhcp vmc:/home/theuser/
+
+scp -r ../docker/netubuntu vmc:~
+scp -r ../docker/dhcp vmc:~
+scp -r ../docker/dns vmc:~
 
 # Gen compose and copy to vmc
 python3 network_conf.py netarchitecture.json docker-compose_tpl.yml | ssh vmc 'tee docker-compose.yml' > /dev/null
