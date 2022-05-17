@@ -31,7 +31,9 @@ services:
 
 networks:
   internal_C:
-    driver: bridge
+    driver: macvlan
+    driver_opts:
+      parent: ens19
     name: internal_C
     ipam:
       config:
