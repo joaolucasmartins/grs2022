@@ -18,6 +18,15 @@ networks:
       config:
         - subnet: "10.0.2.0/24"
           gateway: "10.0.2.254"
+  dmz_B:
+    driver: macvlan
+    driver_opts:
+      parent: ens19.1
+    name: dmz_B
+    ipam:
+      config:
+        - subnet: "10.0.1.0/24"
+          gateway: "10.0.1.254"
 
 services:
   r_b:
