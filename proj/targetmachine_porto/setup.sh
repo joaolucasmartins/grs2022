@@ -22,6 +22,6 @@ scp -r ../docker/dhcp vmc:~
 scp -r ../docker/dns vmc:~
 
 # Gen compose and copy to vmc
-python3 network_conf.py netarchitecture.json docker-compose_tpl.yml | ssh vmc 'tee docker-compose.yml' > /dev/null
+python3 ../helper_scripts/network_conf.py netarchitecture.json docker-compose_tpl.yml | ssh vmc 'tee docker-compose.yml' > /dev/null
 
 ssh vmc 'bash' <"./setup_containers.sh"
