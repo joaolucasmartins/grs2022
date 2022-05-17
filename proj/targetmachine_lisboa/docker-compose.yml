@@ -3,7 +3,7 @@ networks:
   webapp_B:
     driver: macvlan
     driver_opts:
-      parent: ens19.1
+      parent: ens19.3
     name: webapp_B
     ipam:
       config:
@@ -18,20 +18,11 @@ networks:
       config:
         - subnet: "10.0.2.0/24"
           gateway: "10.0.2.254"
-  dmz_B:
-    driver: macvlan
-    driver_opts:
-      parent: ens19.1
-    name: dmz_B
-    ipam:
-      config:
-        - subnet: "10.0.1.0/24"
-          gateway: "10.0.1.254"
 
 services:
-  R_B:
+  r_b:
     build: ./router
-    container_name: R_B
+    container_name: r_b
     sysctls:
       - net.ipv4.ip_forward=1
     cap_add:
