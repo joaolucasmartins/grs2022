@@ -59,6 +59,8 @@ services:
   webapp:
     build: ./webapp
     container_name: webapp
+    cap_add:
+      - NET_ADMIN
     networks:
       webapp_B:
         ipv4_address: 10.0.3.1
