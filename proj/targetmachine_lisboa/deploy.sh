@@ -26,4 +26,8 @@ sudo docker exec "webdev2" /bin/sh -c "ip a | grep global | awk '{print \$2}'"
 echo
 
 printf "3. access to webdev pgadmin\n"
-sudo docker exec "webdev1" curl 10.0.2.3 2>/dev/null
+sudo docker exec "webdev1" w3m 10.0.2.3 2>/dev/null
+echo
+
+printf "4. webdev access webapp (only works if DHCP test works)\n"
+sudo docker exec "webdev1" w3m 10.0.1.5 2>/dev/null
