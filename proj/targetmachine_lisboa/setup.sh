@@ -14,5 +14,5 @@ scp "../docker/docker-compose@.service" vmb:~
 ssh vmb 'bash' <"../helper_scripts/setup_compose_service.sh"
 
 echo "Copy docker containers to the machine"
-scp -r "../docker/router" "../docker/webapp" "../docker/webapp_worker" "docker-compose.yml" vmb:~
+scp -r  "../docker/dhcp" "../docker/router" "../docker/webapp" "../docker/webapp_worker" "docker-compose.yml" vmb:~/docker
 ssh vmb 'bash' <"./setup_containers.sh"
