@@ -25,9 +25,24 @@ services:
   dhcp_c:
     build: ./dhcp
     container_name: dhcp_c
+    cap_add:
+      - NET_ADMIN
     networks:
       internal_C:
         ipv4_address: dhcp_c_internal_c
+  dns:
+    build: ./dns
+    container_name: dns
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /etc/docker/compose/porto/dns/db.myorg.net:/etc/bind/db.myorg.net
+      - /etc/docker/compose/porto/dns/named.conf.local:/etc/bind/named.conf.local
+      - /etc/docker/compose/porto/dns/named.conf.options:/etc/bind/named.conf.options
+    entrypoint: dns_entrypoint
+    networks:
+      DMZ_C:
+        ipv4_address: dns_dmz_c
 
 networks:
   internal_C:
