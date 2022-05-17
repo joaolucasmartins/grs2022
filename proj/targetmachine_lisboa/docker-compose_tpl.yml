@@ -45,9 +45,9 @@ services:
       - NET_ADMIN
     networks:
       dmz_B:
-        ipv4_address: 10.0.1.1
+        ipv4_address: er_b_dmz_b
       pubnet_B:
-        ipv4_address: 172.31.255.253
+        ipv4_address: er_b_pubnet_b
     command: ["172.31.255.254", "10.0.1.0/24", "10.0.0.0/8", "10.0.1.2"]
   external_host_b:
     build: ./router
