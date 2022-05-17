@@ -1,5 +1,7 @@
 @startuml
-!theme amiga
+
+!theme sketchy-outline
+
 nwdiag {
   network load_balancers {
     address = "10.0.3.0/24";
@@ -12,7 +14,8 @@ nwdiag {
     address = "10.0.2.0/24";
     R_B [shape = interface, address="10.0.2.1"]
     db [shape = database, address = "10.0.2.2"];
-    DHCP_B [shape = rectangle, address = "10.0.2.3"];
+    pgadmin [shape = database, address = "10.0.2.3"];
+    DHCP_B [shape = rectangle, address = "10.0.2.4"];
     Employee1 [shape = entity]
     Employee2 [shape = entity]
     Employee3 [shape = entity]
