@@ -30,6 +30,7 @@ services:
     networks:
       internal_C:
         ipv4_address: dhcp_c_internal_c
+    command: ["10.1.2.", "10.1.1.5"]
   dns:
     build: ./dns
     container_name: dns
