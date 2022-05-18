@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 name="$1"
 machine_ssh="$2"
 containers="$3"
