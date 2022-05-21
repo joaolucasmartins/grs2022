@@ -57,6 +57,12 @@
         "name": "internal_c",
         "ip": "10.1.2.2"
       }
+    ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["10.1.2.", "10.1.1.5"]
+      }
     ]
   },
   {
