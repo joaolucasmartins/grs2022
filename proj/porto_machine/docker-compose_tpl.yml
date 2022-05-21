@@ -41,18 +41,18 @@ services:
         ipv4_address: er_c_pubnet_c
     command: ["172.31.255.254", "10.1.1.0/24", "10.0.0.0/8", "10.1.1.2"]
   r_c: # Also connects to internal
-    build: ./netubuntu
+    build: ./router
     container_name: r_c
     sysctls:
       - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
-    entrypoint: r_c_entrypoint
     networks:
       internal_C:
         ipv4_address: r_c_internal_c
       dmz_C:
         ipv4_address: r_c_dmz_c
+    command: [ r_c_default_route ]
   dns:
     build: ./dns
     container_name: dns
