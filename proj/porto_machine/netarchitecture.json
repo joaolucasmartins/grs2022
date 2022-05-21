@@ -19,7 +19,20 @@
     ]
   },
   {
-    "name": "router_c",
+    "name": "er_c",
+    "networks": [
+      {
+        "name": "dmz_c",
+        "ip": "10.1.1.1"
+      },
+      {
+        "name": "pubnet_c",
+        "ip": "172.31.255.253"
+      }
+    ]
+  },
+  {
+    "name": "r_c",
     "entrypoints": [
       {
         "path": "./netconfig.sh",
@@ -32,7 +45,7 @@
         "ip": "10.1.2.1"
       },
       {
-        "name": "DMZ_C",
+        "name": "dmz_c",
         "ip": "10.1.1.2"
       }
     ]

@@ -1,36 +1,58 @@
 version: "3.8"
+networks:
+  internal_C:
+    driver: macvlan
+    driver_opts:
+      parent: ens19.2
+    name: internal_C
+    ipam:
+      config:
+        - subnet: "10.1.2.0/24"
+          gateway: "10.1.2.254"
+  dmz_C:
+    driver: macvlan
+    driver_opts:
+      parent: ens19.1
+    name: dmz_C
+    ipam:
+      config:
+        - subnet: "10.1.1.0/24"
+          gateway: "10.1.1.254"
+  pubnet_C:
+    name: pubnet_C
+    ipam:
+      config:
+        - subnet: "172.31.255.0/24"
+          gateway: "172.31.255.254"
+
 services:
-  netmanager1:
-    build: ./netubuntu
-    container_name: netmanager1
-    cap_add:
-      - NET_ADMIN
-    entrypoint: netmanager1_entrypoint
-    networks:
-      internal_C:
-        ipv4_address: netmanager1_internal_c
-  router_c:
-    build: ./netubuntu
-    container_name: router_c
+  # DMZ
+  er_c: # Connects to dmz and pubnet
+    build: ./edge_router
+    container_name: er_c
     sysctls:
       - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
-    entrypoint: router_c_entrypoint
     networks:
-      internal_C:
-        ipv4_address: router_c_internal_c
-      DMZ_C:
-        ipv4_address: router_c_dmz_c
-  dhcp_c:
-    build: ./dhcp
-    container_name: dhcp_c
+      dmz_C:
+        ipv4_address: er_c_dmz_c
+      pubnet_C:
+        ipv4_address: er_c_pubnet_c
+    command: ["172.31.255.254", "10.1.1.0/24", "10.0.0.0/8", "10.1.1.2"]
+  r_c: # Also connects to internal
+    build: ./netubuntu
+    container_name: r_c
+    sysctls:
+      - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
+    entrypoint: r_c_entrypoint
     networks:
       internal_C:
-        ipv4_address: dhcp_c_internal_c
-    command: ["10.1.2.", "10.1.1.5"]
+        ipv4_address: r_c_internal_c
+      dmz_C:
+        ipv4_address: r_c_dmz_c
   dns:
     build: ./dns
     container_name: dns
@@ -42,23 +64,24 @@ services:
       - /etc/docker/compose/porto/dns/named.conf.options:/etc/bind/named.conf.options
     entrypoint: dns_entrypoint
     networks:
-      DMZ_C:
+      dmz_C:
         ipv4_address: dns_dmz_c
-
-networks:
-  internal_C:
-    driver: macvlan
-    driver_opts:
-      parent: ens19
-    name: internal_C
-    ipam:
-      config:
-        - subnet: "10.1.2.0/24"
-          gateway: "10.1.2.254"
-  DMZ_C:
-    driver: bridge
-    name: DMZ_C
-    ipam:
-      config:
-        - subnet: "10.1.1.0/24"
-          gateway: "10.1.1.254"
+  # Internal
+  netmanager1:
+    build: ./netubuntu
+    container_name: netmanager1
+    cap_add:
+      - NET_ADMIN
+    entrypoint: netmanager1_entrypoint
+    networks:
+      internal_C:
+        ipv4_address: netmanager1_internal_c
+  dhcp_c:
+    build: ./dhcp
+    container_name: dhcp_c
+    cap_add:
+      - NET_ADMIN
+    networks:
+      internal_C:
+        ipv4_address: dhcp_c_internal_c
+    command: ["10.1.2.", "10.1.1.5"]
