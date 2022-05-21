@@ -52,7 +52,7 @@ services:
         ipv4_address: r_c_internal_c
       dmz_C:
         ipv4_address: r_c_dmz_c
-    command: [ r_c_default_route ]
+    command: [ r_c_default_route ] # This or er_c_dmz_c? O q é melhor¿
   dns:
     build: ./dns
     container_name: dns
