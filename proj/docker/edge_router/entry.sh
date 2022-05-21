@@ -12,7 +12,7 @@ ip r add "$internal_network" via "$internal_gateway"
 
 iptables -t nat -F
 iptables -t filter -F
-iptables -t nat -A POSTROUTING -s "$internal_network" -o eth1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
 iptables -P FORWARD DROP
 iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A FORWARD -m state --state NEW -i eth0 -j ACCEPT
