@@ -33,12 +33,7 @@
   },
   {
     "name": "r_c",
-    "entrypoints": [
-      {
-        "path": "./netconfig.sh",
-        "commands": ["10.1.1.254", "10.1.1.1"]
-      }
-    ],
+    "default_route": "10.1.1.1",
     "networks": [
       {
         "name": "internal_c",
