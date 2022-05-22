@@ -21,7 +21,7 @@ nwdiag {
     Employee3 [shape = entity]
   }
 
-  network DMZ_B {
+  network dmz_B {
     address = "10.0.1.0/24";
     proxy [shape = rectangle, address="10.0.1.5"];
     VPN_B [shape = rectangle, address="10.0.1.4"]
@@ -30,12 +30,15 @@ nwdiag {
     R_B [shape = interface, address="10.0.1.2"];
   }
 
-  ER_B [shape = interface];
-  ER_B -- internet;
-  internet [shape = cloud, address=172.31.255.254/24];
-  internet -- ER_C;
+  network pubnet {
+    address = "172.31.50.0";
+    ER_B [shape = interface, address="172.31.50.1"];
+    ER_C [shape = interface, address="172.31.50.2"];
+    internet [shape = cloud];
+  }
 
-  network DMZ_C {
+
+  network dmz_C {
     address = "10.1.1.0/24";
     ER_C [shape = interface, address="10.1.1.1"]
     firewall_C [shape = queu, address="10.1.1.3"]

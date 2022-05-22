@@ -19,20 +19,38 @@
     ]
   },
   {
-    "name": "router_c",
-    "entrypoints": [
+    "name": "er_c",
+    "networks": [
       {
-        "path": "./netconfig.sh",
-        "commands": ["10.1.1.254", "10.1.1.1"]
+        "name": "dmz_c",
+        "ip": "10.1.1.1"
+      },
+      {
+        "name": "pubnet",
+        "ip": "172.31.255.252"
+      },
+      {
+        "name": "internet",
+        "ip": "172.31.50.2"
       }
     ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["172.31.255.254", "10.1.1.0/24", "10.1.2.0/24", "10.1.1.2"]
+      }
+    ]
+  },
+  {
+    "name": "r_c",
+    "default_route": "10.1.1.1",
     "networks": [
       {
         "name": "internal_c",
         "ip": "10.1.2.1"
       },
       {
-        "name": "DMZ_C",
+        "name": "dmz_c",
         "ip": "10.1.1.2"
       }
     ]
@@ -43,6 +61,12 @@
       {
         "name": "internal_c",
         "ip": "10.1.2.2"
+      }
+    ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["10.1.2.", "10.1.1.5"]
       }
     ]
   },

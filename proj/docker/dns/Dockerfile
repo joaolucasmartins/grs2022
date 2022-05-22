@@ -31,6 +31,5 @@ RUN mkdir -p /run/named && chown bind:bind /run/named && chmod 755 /run/named
 VOLUME ["/etc/bind", "/var/cache/bind", "/var/lib/bind", "/var/log"]
 
 COPY ./configDNS.sh .
-RUN chmod +x configDNS.sh
 
 EXPOSE 53/udp 53/tcp 953/tcp
