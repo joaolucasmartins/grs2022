@@ -7,8 +7,12 @@
         "ip": "10.0.1.1"
       },
       {
-        "name": "pubnet_b",
+        "name": "pubnet",
         "ip": "172.31.255.253"
+      },
+      {
+        "name": "internet",
+        "ip": "172.31.50.1"
       }
     ]
   },
@@ -16,7 +20,7 @@
     "name": "external_host_b",
     "networks": [
       {
-        "name": "pubnet_b",
+        "name": "pubnet",
         "ip": "172.31.255.100"
       }
     ]

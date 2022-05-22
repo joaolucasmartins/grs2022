@@ -27,12 +27,21 @@ networks:
       config:
         - subnet: "10.0.1.0/24"
           gateway: "10.0.1.254"
-  pubnet_B:
-    name: pubnet_B
+  pubnet:
+    name: pubnet
     ipam:
       config:
         - subnet: "172.31.255.0/24"
           gateway: "172.31.255.254"
+  internet:
+    driver: macvlan
+    driver_opts:
+      parent: ens20
+    name: internet
+    ipam:
+      config:
+        - subnet: "172.31.50.0/24"
+          gateway: "172.31.50.254"
 
 services:
   # PUBLIC NET
@@ -46,8 +55,10 @@ services:
     networks:
       dmz_B:
         ipv4_address: er_b_dmz_b
-      pubnet_B:
-        ipv4_address: er_b_pubnet_b
+      pubnet:
+        ipv4_address: er_b_pubnet
+      internet:
+        ipv4_address: er_b_internet
     command: ["172.31.255.254", "10.0.1.0/24", "10.0.0.0/8", "10.0.1.2"]
   external_host_b:
     build: ./router
@@ -55,8 +66,8 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
-      pubnet_B:
-        ipv4_address: external_host_b_pubnet_b
+      pubnet:
+        ipv4_address: external_host_b_pubnet
     command: ["172.31.255.253"]
 
   # DMZ
