@@ -18,12 +18,21 @@ networks:
       config:
         - subnet: "10.1.1.0/24"
           gateway: "10.1.1.254"
-  pubnet_C:
-    name: pubnet_C
+  pubnet:
+    name: pubnet
     ipam:
       config:
         - subnet: "172.31.255.0/24"
           gateway: "172.31.255.254"
+  internet:
+    driver: macvlan
+    driver_opts:
+      parent: ens20
+    name: internet
+    ipam:
+      config:
+        - subnet: "172.31.50.0/24"
+          gateway: "172.31.50.254"
 
 services:
   # DMZ
@@ -38,8 +47,10 @@ services:
     networks:
       dmz_C:
         ipv4_address: er_c_dmz_c
-      pubnet_C:
-        ipv4_address: er_c_pubnet_c
+      pubnet:
+        ipv4_address: er_c_pubnet
+      internet:
+        ipv4_address: er_c_internet
   r_c: # Also connects to internal
     build: ./router
     container_name: r_c
