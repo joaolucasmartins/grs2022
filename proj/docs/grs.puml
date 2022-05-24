@@ -22,16 +22,16 @@ nwdiag {
   }
 
   network dmz_B {
-    address = "10.0.1.0/24";
-    proxy [shape = rectangle, address="10.0.1.5"];
-    VPN_B [shape = rectangle, address="10.0.1.4"]
-    firewall_B [shape = queue, address="10.0.1.3"];
-    ER_B [shape = interface, address="10.0.1.1"];
-    R_B [shape = interface, address="10.0.1.2"];
+    address = "172.0.1.0/29";
+    proxy [shape = rectangle, address="172.0.1.5"];
+    VPN_B [shape = rectangle, address="172.0.1.4"]
+    firewall_B [shape = queue, address="172.0.1.3"];
+    ER_B [shape = interface, address="172.0.1.1"];
+    R_B [shape = interface, address="172.0.1.2"];
   }
 
   network pubnet {
-    address = "172.31.50.0";
+    address = "172.31.50.0/24";
     ER_B [shape = interface, address="172.31.50.1"];
     ER_C [shape = interface, address="172.31.50.2"];
     internet [shape = cloud];
@@ -39,12 +39,12 @@ nwdiag {
 
 
   network dmz_C {
-    address = "10.1.1.0/24";
-    ER_C [shape = interface, address="10.1.1.1"]
-    firewall_C [shape = queu, address="10.1.1.3"]
-    R_C [shape = interfac, address="10.1.1.2"]
-    DNS [shape = rectangl, address="10.1.1.5"]
-    VPN_C [shape = rectangl, address="10.1.1.4"]
+    address = "172.1.1.0/29";
+    ER_C [shape = interface, address="172.1.1.1"]
+    firewall_C [shape = queu, address="172.1.1.3"]
+    R_C [shape = interfac, address="172.1.1.2"]
+    DNS [shape = rectangl, address="172.1.1.5"]
+    VPN_C [shape = rectangl, address="172.1.1.4"]
   }
 
   network internal_C {

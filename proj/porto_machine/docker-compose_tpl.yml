@@ -16,8 +16,8 @@ networks:
     name: dmz_C
     ipam:
       config:
-        - subnet: "10.1.1.0/24"
-          gateway: "10.1.1.254"
+        - subnet: "172.1.1.0/24"
+          gateway: "172.1.1.254"
   pubnet:
     name: pubnet
     ipam:
