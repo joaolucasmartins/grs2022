@@ -30,15 +30,16 @@ test_cmd sudo docker exec "webdev2" /bin/sh -c "ip a | grep global | awk '{print
 echo
 
 printf "3. access to webdev pgadmin\n"
-test_cmd sudo docker exec "webdev1" w3m 10.0.2.3
+test_cmd sudo docker exec "webdev1" curl 10.0.2.3
 echo
 
 printf "4. webdev access webapp (only works if DHCP test works)\n"
-test_cmd sudo docker exec "webdev2" w3m 10.0.1.5
+test_cmd sudo docker exec "webdev2" curl 10.0.1.5
 echo
 
 printf "5. webdev access the internet\n"
-test_cmd sudo docker exec "webdev1" w3m example.com
+test_cmd sudo docker exec "webdev1" curl example.com
 
 printf "6. external host access webapp\n"
-test_cmd sudo docker exec "external_host_b" ping -c 3 10.0.1.5
+test_cmd sudo docker exec "external_host_b" curl 172.31.255.253
+
