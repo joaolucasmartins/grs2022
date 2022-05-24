@@ -1,15 +1,19 @@
 #!/bin/sh
 
-ip r del default
-ip r add default via 10.1.1.1
+dflt_gateway="$1"
+internal_gateway="$2"
+dmz_ip="$3"
+internal_network="$4"
 
-ip r add 10.1.2.0/24 via 10.1.1.2
+ip r del default
+ip r add default via "$dflt_gateway"
+
+ip r add "$internal_network" via "$internal_gateway"
 
 iptables -t nat -F
-iptables -t nat -A POSTROUTING -j SNAT --to-source 10.1.1.3
 iptables -P FORWARD DROP
-iptables -A FORWARD -m state --state NEW,ESTABLISHED,RELATED -d 10.1.1.0/24 -j ACCEPT
-iptables -A FORWARD -m state --state ESTABLISHED,RELATED -d 10.1.2.0/24 -j ACCEPT
-iptables -A FORWARD -m state --state NEW,ESTABLISHED,RELATED -s 10.1.1.0/24,10.1.2.0/24 -j ACCEPT
+iptables -A FORWARD -m state --state NEW,ESTABLISHED,RELATED -d "$dmz_ip" -j ACCEPT
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -d "$internal_network" -j ACCEPT
+iptables -A FORWARD -m state --state NEW,ESTABLISHED,RELATED -s "$dmz_ip","$internal_network" -j ACCEPT
 
 tail -f "/dev/null"
