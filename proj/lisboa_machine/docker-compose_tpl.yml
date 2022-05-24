@@ -52,6 +52,7 @@ services:
       - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
+    entrypoint: er_b_entrypoint
     networks:
       dmz_B:
         ipv4_address: er_b_dmz_b
@@ -59,7 +60,6 @@ services:
         ipv4_address: er_b_pubnet
       internet:
         ipv4_address: er_b_internet
-    command: ["172.31.255.254", "10.0.1.0/24", "10.0.0.0/8", "10.0.1.2"]
   external_host_b:
     build: ./router
     container_name: external_host_b
