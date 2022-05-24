@@ -117,7 +117,7 @@ services:
     networks:
       internal_B:
         ipv4_address: dhcp_b_internal_b
-    command: ["10.0.2.", "1.1.1.1"]
+    command: ["10.0.2.", "1.1.1.1", "10.1.2."]
   ## DB
   postgres:
     image: postgres:14
