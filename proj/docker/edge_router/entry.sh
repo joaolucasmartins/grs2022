@@ -16,9 +16,9 @@ ip r add "$internal_network" via "$gateway"
 # ip r add "$internal_network" via "$gateway"
 # ip r add "$dmz_ip" via "$gateway"
 
-iptables -t nat -F
-iptables -t filter -F
-iptables -t nat -A POSTROUTING -j MASQUERADE
+# iptables -t nat -F
+# iptables -t filter -F
+# iptables -t nat -A POSTROUTING -j MASQUERADE
 # iptables -P FORWARD DROP
 # iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 # iptables -A FORWARD -m state --state NEW -i eth0 -j ACCEPT
