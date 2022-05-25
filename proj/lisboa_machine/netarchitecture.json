@@ -17,6 +17,9 @@
     ],
     "entrypoints": [
       {
+        "path": "./nat.sh"
+      },
+      {
         "path": "./forwardWebapp.sh"
       },
       {

@@ -1,9 +1,14 @@
 #!/bin/sh
 
-dflt_gateway="$1"
+dmz_ip="$1"
+gateway="$2"
 
 ip r del default
-ip r add default via "$dflt_gateway"
+ip r add default via "$gateway"
+
+ip r del "$dmz_ip"
+ip r add "$gateway" dev eth0
+ip r add "$dmz_ip" via "$gateway"
 
 # drop DHCP requests that attempt to leave the local network
 #iptables -A INPUT -p udp --dport 67:68 -j DROP
