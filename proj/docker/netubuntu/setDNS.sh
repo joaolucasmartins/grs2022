@@ -3,4 +3,4 @@
 dns_server="$1"
 
 # Set DNS server
-echo "nameserver $dns_server" > /etc/resolv.conf
+printf "nameserver $dns_server\nnameserver 8.8.8.8" > /etc/resolv.conf

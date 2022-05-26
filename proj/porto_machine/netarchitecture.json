@@ -36,14 +36,16 @@
     ],
     "entrypoints": [
       {
+        "path": "./nat.sh"
+      },
+      {
         "path": "./entry.sh",
-        "commands": ["172.31.255.254", "10.1.1.0/24", "10.1.2.0/24", "10.1.1.2"]
+        "commands": ["172.31.255.254", "10.1.1.0/24", "10.1.2.0/24", "10.1.1.3"]
       }
     ]
   },
   {
     "name": "r_c",
-    "default_route": "10.1.1.1",
     "networks": [
       {
         "name": "internal_c",
@@ -52,6 +54,27 @@
       {
         "name": "dmz_c",
         "ip": "10.1.1.2"
+      }
+    ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["10.1.1.0/24", "10.1.1.3"]
+      }
+    ]
+  },
+  {
+    "name": "firewall",
+    "networks": [
+      {
+        "name": "dmz_c",
+        "ip": "10.1.1.3"
+      }
+    ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["10.1.1.1", "10.1.1.2", "10.1.1.0/24", "10.1.2.0/24"]
       }
     ]
   },
@@ -75,7 +98,7 @@
     "entrypoints": [
       {
         "path": "./configDNS.sh",
-        "commands": ["10.1.2.0/24", "10.1.1.2"]
+        "commands": ["10.1.1.0/24", "10.1.1.3"]
       }
     ],
     "networks": [
