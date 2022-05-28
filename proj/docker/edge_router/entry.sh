@@ -1,7 +1,7 @@
 #!/bin/sh
 
 dflt_gateway="$1"
-dmz_ip="$2"
+dmz_network="$2"
 internal_network="$3"
 gateway="$4"
 other_net="$5"

@@ -17,7 +17,7 @@ networks:
     ipam:
       config:
         - subnet: "172.1.1.0/29"
-          gateway: "172.1.1.254"
+          gateway: "172.1.1.6"
   pubnet:
     name: pubnet
     ipam:
