@@ -1,7 +1,5 @@
 @startuml
 
-!theme sketchy-outline
-
 nwdiag {
   network load_balancers {
     address = "10.0.3.0/24";
