@@ -59,7 +59,7 @@ services:
         ipv4_address: er_b_pubnet
       internet:
         ipv4_address: er_b_internet
-    command: ["172.31.255.254", "10.0.1.0/24", "10.0.0.0/8", "10.0.1.2", "'172.1.1.1/29:172.31.50.2'"]
+    command: ["172.31.255.254", "172.0.1.0/29", "'10.0.1.0/8:10.0.0.2 172.1.1.0/29:172.31.50.2'"]
   external_host_b:
     build: ./router
     container_name: external_host_b
