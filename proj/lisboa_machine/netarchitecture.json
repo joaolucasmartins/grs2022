@@ -51,6 +51,15 @@
     ]
   },
   {
+    "name": "wireguard",
+    "networks": [
+      {
+        "name": "dmz_b",
+        "ip": "172.0.1.4"
+      }
+    ]
+  },
+  {
     "name": "firewall",
     "networks": [
       {
