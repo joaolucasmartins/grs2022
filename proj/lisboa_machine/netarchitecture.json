@@ -20,7 +20,8 @@
         "path": "./nat.sh"
       },
       {
-        "path": "./forwardWebapp.sh"
+        "path": "./forwardWebapp.sh",
+        "commands": ["172.0.1.5"]
       },
       {
         "path": "./entry.sh",

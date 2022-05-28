@@ -19,3 +19,8 @@ sudo systemctl start docker-compose@lisboa
 # Tests
 echo "Run tests:"
 
+echo "1. curl the webapp from netmanager"
+test_cmd sudo docker exec "netmanager1" curl 172.0.1.5 2>/dev/null
+
+echo "2. netmanager acess to internet"
+test_cmd sudo docker exec "netmanager1" curl example.com 2>/dev/null
