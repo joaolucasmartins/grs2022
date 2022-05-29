@@ -153,6 +153,8 @@ services:
   dhcp_b:
     build: ./dhcp
     container_name: dhcp_b
+    cap_add:
+      - NET_ADMIN
     networks:
       internal_B:
         ipv4_address: dhcp_b_internal_b
