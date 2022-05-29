@@ -101,6 +101,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Lisbon
+      - SERVERURL=wireguard_dmz_B
       - SERVERPORT=51820
       - PEERS=10
       - PEERDNS=auto
