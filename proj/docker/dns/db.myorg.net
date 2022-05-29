@@ -8,8 +8,8 @@ $TTL 2
 
 @       IN      NS    ns.myorg.net.
 
-@       IN      A     10.9.0.180
+@       IN      A     172.0.1.5
 ;www    IN      A     10.9.0.180
-www     IN      A     192.168.60.80
+www     IN      A     172.0.1.5
 ns      IN      A     10.9.0.153
 *       IN      A     10.9.0.100
