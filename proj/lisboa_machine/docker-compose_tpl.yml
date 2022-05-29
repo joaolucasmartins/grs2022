@@ -93,6 +93,35 @@ services:
     networks:
       dmz_B:
         ipv4_address: firewall_dmz_B
+  ## VPN - https://github.com/linuxserver/docker-wireguard
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Lisbon
+      - SERVERPORT=51820
+      - PEERS=10
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.0.1.0
+      - ALLOWEDIPS=0.0.0.0/0
+      - LOG_CONFS=true
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - wireguard_config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    networks:
+      dmz_B:
+        ipv4_address: wireguard_dmz_B
+    restart: unless-stopped
   ## WEBAPP (deals with webapp net)
   webapp_worker1:
     build: ./webapp_worker
@@ -180,3 +209,4 @@ services:
 volumes:
   db-data:
   pgadmin-data:
+  wireguard_config:
