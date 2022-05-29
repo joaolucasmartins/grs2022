@@ -88,11 +88,10 @@ services:
         ipv4_address: dns_dmz_c
   # Internal
   netmanager1:
-    build: ./netubuntu
+    build: ./netmanager
     container_name: netmanager1
     cap_add:
       - NET_ADMIN
-    entrypoint: netmanager1_entrypoint
     networks:
       internal_C:
         ipv4_address: netmanager1_internal_c

@@ -205,7 +205,6 @@ services:
     networks:
       internal_B:
         ipv4_address: webdev2_internal_b
-
 volumes:
   db-data:
   pgadmin-data:
