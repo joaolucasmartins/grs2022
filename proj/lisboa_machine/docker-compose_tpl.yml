@@ -93,14 +93,16 @@ services:
     networks:
       dmz_B:
         ipv4_address: firewall_dmz_B
-  ## VPN - https://github.com/linuxserver/docker-wireguard
+  ## VPN
+  ## IMPORTANT: The default gateway is hard-coded in the container's files. Be mindful of this when changing the IPs of stuff.
   wireguard:
-    image: lscr.io/linuxserver/wireguard:latest
+    build: ./wireguard
     container_name: wireguard
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Lisbon
+      - SERVERURL=wireguard_dmz_B
       - SERVERPORT=51820
       - PEERS=10
       - PEERDNS=auto
