@@ -121,7 +121,12 @@
     "entrypoints": [
       {
         "path": "./entry.sh",
-        "commands": ["er_b_dmz_b", "r_b_dmz_b", "dmz_b_subnet", "internal_b_subnet"]
+        "commands": [
+          "er_b_dmz_b",
+          "r_b_dmz_b",
+          "dmz_b_subnet",
+          "internal_b_subnet"
+        ]
       }
     ]
   },
@@ -169,6 +174,12 @@
         "name": "internal_b",
         "ip": "10.0.2.4"
       }
+    ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["10.0.2.", "1.1.1.1"]
+      }
     ]
   },
   {
@@ -177,12 +188,6 @@
       {
         "name": "internal_b",
         "ip": "10.0.2.2"
-      }
-    ],
-    "entrypoints": [
-      {
-        "path": "./entry.sh",
-        "commands": ["10.0.2.", "1.1.1.1"]
       }
     ]
   },
