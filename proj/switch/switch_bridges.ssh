@@ -1,6 +1,11 @@
 :global etherid
 :for etherid from=3 to=24 step=1 do={ /interface bridge port remove numbers=[find interface="ether$etherid"] }
-/interface bridge add name=br-client
-/interface bridge add name=br-server
-:for etherid from=9 to=16 step=1 do={ /interface bridge port add bridge=br-client interface="ether$etherid" }
-:for etherid from=17 to=24 step=1 do={ /interface bridge port add bridge=br-server interface="ether$etherid" }
+/interface bridge remove br-internet
+/interface bridge add name=br-internet
+/interface bridge remove br-lisboa
+/interface bridge add name=br-lisboa
+/interface bridge remove br-porto
+/interface bridge add name=br-porto
+:for etherid from=6 to=8 step=1 do={ /interface bridge port add bridge=br-internet interface="ether$etherid" }
+:for etherid from=9 to=16 step=1 do={ /interface bridge port add bridge=br-lisboa interface="ether$etherid" }
+:for etherid from=17 to=24 step=1 do={ /interface bridge port add bridge=br-porto interface="ether$etherid" }
