@@ -14,12 +14,15 @@ sudo systemctl stop docker-compose@porto
 # Deploy containers
 echo "Deploy containers"
 sudo ip link set ens19 up
+sudo ip link set ens20 up
 sudo systemctl start docker-compose@porto
 
 # Tests
 echo "Run tests:"
 
 echo "1. curl the webapp from netmanager"
+echo "Sleeping for 15 secs waiting for DHCP to attribute an IP"
+sleep 15
 test_cmd sudo docker exec "netmanager1" curl 172.0.1.5 2>/dev/null
 
 echo "2. netmanager acess to internet"

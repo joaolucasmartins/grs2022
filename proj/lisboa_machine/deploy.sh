@@ -14,6 +14,7 @@ sudo systemctl stop docker-compose@lisboa
 # Deploy containers
 echo "Deploy containers"
 sudo ip link set ens19 up
+sudo ip link set ens20 up
 sudo systemctl start docker-compose@lisboa
 
 # Tests
