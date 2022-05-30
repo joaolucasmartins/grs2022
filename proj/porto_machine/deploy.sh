@@ -9,12 +9,12 @@ test_cmd() {
 
 # Clean up
 echo "Clean up"
-sudo systemctl stop docker-compose@lisboa
+sudo systemctl stop docker-compose@porto
 
 # Deploy containers
 echo "Deploy containers"
 sudo ip link set ens19 up
-sudo systemctl start docker-compose@lisboa
+sudo systemctl start docker-compose@porto
 
 # Tests
 echo "Run tests:"
