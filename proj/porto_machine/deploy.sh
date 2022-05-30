@@ -25,7 +25,7 @@ sleep 15
 echo "1. curl the webapp from netmanager"
 echo "Sleeping for 15 secs waiting for DHCP to attribute an IP"
 sleep 15
-test_cmd sudo docker exec "netmanager1" curl 172.0.1.5 2>/dev/null
+test_cmd sudo docker exec "netmanager1" curl myorg.net 2>/dev/null
 
 echo "2. netmanager acess to internet"
 test_cmd sudo docker exec "netmanager1" curl example.com 2>/dev/null
