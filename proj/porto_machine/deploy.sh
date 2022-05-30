@@ -19,6 +19,8 @@ sudo systemctl start docker-compose@porto
 
 # Tests
 echo "Run tests:"
+echo "Sleeping for 15 seconds, so the addresses have time to be acquired..."
+sleep 15
 
 echo "1. curl the webapp from netmanager"
 echo "Sleeping for 15 secs waiting for DHCP to attribute an IP"
