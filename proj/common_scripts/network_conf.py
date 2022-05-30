@@ -12,6 +12,9 @@ with open(architecture_file) as f:
 with open(compose_file) as f:
     template = f.read()
 
+# we do 2 file paths, so chain substituion works, e.g.:
+#   - entrypoints using network entries
+#   - entries using information from other entries
 for i in range(2):
     for container in net_arch:
         container_name = container["name"]
