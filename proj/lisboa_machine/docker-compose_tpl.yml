@@ -1,28 +1,24 @@
 version: "3.8"
 networks:
   webapp_b:
-    driver: macvlan
-    driver_opts:
-      parent: ens19.3
     name: webapp_b
+    driver: bridge
     ipam:
       config:
         - subnet: webapp_b_subnet
           gateway: webapp_b_gateway
   internal_b:
+    name: internal_b
     driver: macvlan
     driver_opts:
-      parent: ens19.2
-    name: internal_b
+      parent: ens19
     ipam:
       config:
         - subnet: internal_b_subnet
           gateway: internal_b_gateway
   dmz_b:
-    driver: macvlan
-    driver_opts:
-      parent: ens19.1
     name: dmz_b
+    driver: bridge
     ipam:
       config:
         - subnet: dmz_b_subnet
