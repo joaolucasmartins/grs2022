@@ -79,7 +79,9 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - /etc/docker/compose/porto/dns/db.myorg.net:/etc/bind/db.myorg.net
+      - /etc/docker/compose/porto/dns/externals:/etc/bind/externals
+      - /etc/docker/compose/porto/dns/internals:/etc/bind/internals
+      - /etc/docker/compose/porto/dns/named.conf:/etc/bind/named.conf
       - /etc/docker/compose/porto/dns/named.conf.local:/etc/bind/named.conf.local
       - /etc/docker/compose/porto/dns/named.conf.options:/etc/bind/named.conf.options
     entrypoint: dns_entrypoint
