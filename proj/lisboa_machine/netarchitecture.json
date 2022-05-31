@@ -172,7 +172,7 @@
     "networks": [
       {
         "name": "internal_b",
-        "ip": "10.0.2.10"
+        "ip": "10.0.2.5"
       }
     ],
     "entrypoints": [
