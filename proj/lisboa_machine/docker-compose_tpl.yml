@@ -30,10 +30,10 @@ networks:
         - subnet: pubnet_subnet
           gateway: pubnet_gateway
   internet:
+    name: internet
     driver: macvlan
     driver_opts:
       parent: ens20
-    name: internet
     ipam:
       config:
         - subnet: internet_subnet

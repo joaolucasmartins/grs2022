@@ -1,19 +1,17 @@
 version: "3.8"
 networks:
   internal_c:
+    name: internal_c
     driver: macvlan
     driver_opts:
-      parent: ens19.2
-    name: internal_c
+      parent: ens19
     ipam:
       config:
         - subnet: "internal_c_subnet"
           gateway: "internal_c_gateway"
   dmz_c:
-    driver: macvlan
-    driver_opts:
-      parent: ens19.1
     name: dmz_c
+    driver: bridge
     ipam:
       config:
         - subnet: "dmz_c_subnet"
@@ -25,10 +23,10 @@ networks:
         - subnet: "pubnet_subnet"
           gateway: "pubnet_gateway"
   internet:
+    name: internet
     driver: macvlan
     driver_opts:
       parent: ens20
-    name: internet
     ipam:
       config:
         - subnet: "internet_subnet"
