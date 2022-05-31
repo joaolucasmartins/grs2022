@@ -18,6 +18,7 @@ RUN add-apt-repository -y ppa:isc/bind-esv
 RUN apt-get -qqqy update
 RUN apt-get -qqqy dist-upgrade
 RUN apt-get -qqqy install bind9=$DEB_VERSION bind9utils=$DEB_VERSION
+RUN apt-get -y install vim
 
 # Now remove the pkexec that got pulled as dependency to software-properties-common
 RUN apt-get --purge -y autoremove policykit-1

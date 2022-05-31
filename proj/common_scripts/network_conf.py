@@ -1,41 +1,43 @@
 #!/bin/python3
 
 import json
-import subprocess
-import sys
+from sys import argv
 
-architecture_file = sys.argv[1]
-compose_file = sys.argv[2]
-f = open(architecture_file)
-net_arch = json.load(f)
+architecture_file = argv[1]
+compose_file = argv[2]
 
-sed_expressions = []
-for container in net_arch:
-  container_name = container["name"]
+with open(architecture_file) as f:
+    net_arch = json.load(f)
 
-  for node in container:
-    if node == "networks":
-      for network in container["networks"]:
-        ip = network["ip"]
-        name = network["name"]
-        sed_expressions.extend(["-e", f"s|{container_name}_{name}|{ip}|ig"])
-    elif node == "entrypoints":
-      entrypoints_len = len(container["entrypoints"]) if "entrypoints" in container else 0
-      if entrypoints_len:
-        entrypoint_cmd = "/bin/sh -c '"
-        entrypoint_args = []
-        for i in range(entrypoints_len):
-          entrypoint = container["entrypoints"][i]
-          entrypoint_args.append("{path} {arguments}"
-                         .format(path=entrypoint["path"], arguments=" ".join(entrypoint["commands"])) 
-                         if "commands" in entrypoint else "{path}".format(path=entrypoint["path"]))
-                         
-        entrypoint_cmd += " \&\& ".join(entrypoint_args) + "'"
-        sed_expressions.extend(["-e", f"s|{container_name}_entrypoint|{entrypoint_cmd}|ig"])
-    elif node != "name": # Fill other params of container
-        val = container[node]
-        sed_expressions.extend(["-e", f"s|{container_name}_{node}|\"{val}\"|ig"])
-  
+with open(compose_file) as f:
+    template = f.read()
 
-f.close()
-subprocess.call(["sed", *sed_expressions, compose_file])
+# we do 2 file paths, so chain substituion works, e.g.:
+#   - entrypoints using network entries
+#   - entries using information from other entries
+for i in range(2):
+    for container in net_arch:
+        container_name = container["name"]
+
+        for node_name, node in container.items():
+            if node_name == "networks":
+                for network in node:
+                    ip = network["ip"]
+                    name = network["name"]
+                    template = template.replace(f"{container_name}_{name}", ip)
+            elif node_name == "entrypoints":
+                entrypoint_args = []
+                for entrypoint in node:
+                    if "commands" in entrypoint:
+                        cmd = f"{entrypoint['path']} {' '.join(entrypoint['commands'])}"
+                    else:
+                        cmd = entrypoint["path"]
+                    entrypoint_args.append(cmd)
+
+                entrypoint_cmd = "/bin/sh -c '" + (" && ".join(entrypoint_args)) + "'"
+                template = template.replace(f"{container_name}_entrypoint", entrypoint_cmd)
+            elif node_name != "name":
+                # fill other (container-specific) properties
+                template = template.replace(f"{container_name}_{node_name}", node)
+
+print(template, end="")

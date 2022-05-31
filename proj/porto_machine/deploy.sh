@@ -9,18 +9,23 @@ test_cmd() {
 
 # Clean up
 echo "Clean up"
-sudo systemctl stop docker-compose@lisboa
+sudo systemctl stop docker-compose@porto
 
 # Deploy containers
 echo "Deploy containers"
 sudo ip link set ens19 up
-sudo systemctl start docker-compose@lisboa
+sudo ip link set ens20 up
+sudo systemctl start docker-compose@porto
 
 # Tests
 echo "Run tests:"
+echo "Sleeping for 15 seconds, so the addresses have time to be acquired..."
+sleep 15
 
 echo "1. curl the webapp from netmanager"
-test_cmd sudo docker exec "netmanager1" curl 172.0.1.5 2>/dev/null
+echo "Sleeping for 15 secs waiting for DHCP to attribute an IP"
+sleep 15
+test_cmd sudo docker exec "netmanager1" curl myorg.net 2>/dev/null
 
 echo "2. netmanager acess to internet"
 test_cmd sudo docker exec "netmanager1" curl example.com 2>/dev/null

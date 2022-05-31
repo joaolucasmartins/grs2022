@@ -1,29 +1,29 @@
 version: "3.8"
 networks:
-  internal_C:
+  internal_c:
     driver: macvlan
     driver_opts:
       parent: ens19.2
-    name: internal_C
+    name: internal_c
     ipam:
       config:
-        - subnet: "10.1.2.0/24"
-          gateway: "10.1.2.254"
-  dmz_C:
+        - subnet: "internal_c_subnet"
+          gateway: "internal_c_gateway"
+  dmz_c:
     driver: macvlan
     driver_opts:
       parent: ens19.1
-    name: dmz_C
+    name: dmz_c
     ipam:
       config:
-        - subnet: "172.1.1.0/29"
-          gateway: "172.1.1.6"
+        - subnet: "dmz_c_subnet"
+          gateway: "dmz_c_gateway"
   pubnet:
     name: pubnet
     ipam:
       config:
-        - subnet: "172.31.255.0/24"
-          gateway: "172.31.255.254"
+        - subnet: "pubnet_subnet"
+          gateway: "pubnet_gateway"
   internet:
     driver: macvlan
     driver_opts:
@@ -31,8 +31,8 @@ networks:
     name: internet
     ipam:
       config:
-        - subnet: "172.31.50.0/24"
-          gateway: "172.31.50.254"
+        - subnet: "internet_subnet"
+          gateway: "internet_gateway"
 
 services:
   # DMZ
@@ -45,7 +45,7 @@ services:
       - NET_ADMIN
     entrypoint: er_c_entrypoint
     networks:
-      dmz_C:
+      dmz_c:
         ipv4_address: er_c_dmz_c
       pubnet:
         ipv4_address: er_c_pubnet
@@ -60,9 +60,9 @@ services:
       - NET_ADMIN
     entrypoint: r_c_entrypoint
     networks:
-      internal_C:
+      internal_c:
         ipv4_address: r_c_internal_c
-      dmz_C:
+      dmz_c:
         ipv4_address: r_c_dmz_c
   firewall:
     build: ./firewall
@@ -71,7 +71,7 @@ services:
       - NET_ADMIN
     entrypoint: firewall_entrypoint
     networks:
-      dmz_C:
+      dmz_c:
         ipv4_address: firewall_dmz_c
   dns:
     build: ./dns
@@ -79,22 +79,23 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - /etc/docker/compose/porto/dns/db.myorg.net:/etc/bind/db.myorg.net
+      - /etc/docker/compose/porto/dns/externals:/etc/bind/externals
+      - /etc/docker/compose/porto/dns/internals:/etc/bind/internals
+      - /etc/docker/compose/porto/dns/named.conf:/etc/bind/named.conf
       - /etc/docker/compose/porto/dns/named.conf.local:/etc/bind/named.conf.local
       - /etc/docker/compose/porto/dns/named.conf.options:/etc/bind/named.conf.options
     entrypoint: dns_entrypoint
     networks:
-      dmz_C:
+      dmz_c:
         ipv4_address: dns_dmz_c
   # Internal
   netmanager1:
-    build: ./netubuntu
+    build: ./netmanager
     container_name: netmanager1
     cap_add:
       - NET_ADMIN
-    entrypoint: netmanager1_entrypoint
     networks:
-      internal_C:
+      internal_c:
         ipv4_address: netmanager1_internal_c
   dhcp_c:
     build: ./dhcp
@@ -103,5 +104,5 @@ services:
       - NET_ADMIN
     entrypoint: dhcp_c_entrypoint
     networks:
-      internal_C:
+      internal_c:
         ipv4_address: dhcp_c_internal_c

@@ -8,6 +8,7 @@ nwdiag {
     W2;
     W3;
   }
+
   network internal_B {
     address = "10.0.2.0/24";
     R_B [shape = interface, address="10.0.2.1"]
@@ -35,14 +36,12 @@ nwdiag {
     internet [shape = cloud];
   }
 
-
   network dmz_C {
     address = "172.1.1.0/29";
     ER_C [shape = interface, address="172.1.1.1"]
     firewall_C [shape = queu, address="172.1.1.3"]
     R_C [shape = interfac, address="172.1.1.2"]
     DNS [shape = rectangl, address="172.1.1.5"]
-    VPN_C [shape = rectangl, address="172.1.1.4"]
   }
 
   network internal_C {

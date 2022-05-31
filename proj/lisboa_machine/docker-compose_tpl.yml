@@ -1,38 +1,38 @@
 version: "3.8"
 networks:
-  webapp_B:
+  webapp_b:
     driver: macvlan
     driver_opts:
       parent: ens19.3
-    name: webapp_B
+    name: webapp_b
     ipam:
       config:
-        - subnet: "10.0.3.0/24"
-          gateway: "10.0.3.254"
-  internal_B:
+        - subnet: webapp_b_subnet
+          gateway: webapp_b_gateway
+  internal_b:
     driver: macvlan
     driver_opts:
       parent: ens19.2
-    name: internal_B
+    name: internal_b
     ipam:
       config:
-        - subnet: "10.0.2.0/24"
-          gateway: "10.0.2.254"
-  dmz_B:
+        - subnet: internal_b_subnet
+          gateway: internal_b_gateway
+  dmz_b:
     driver: macvlan
     driver_opts:
       parent: ens19.1
-    name: dmz_B
+    name: dmz_b
     ipam:
       config:
-        - subnet: "172.0.1.0/29"
-          gateway: "172.0.1.6"
+        - subnet: dmz_b_subnet
+          gateway: dmz_b_gateway
   pubnet:
     name: pubnet
     ipam:
       config:
-        - subnet: "172.31.255.0/24"
-          gateway: "172.31.255.254"
+        - subnet: pubnet_subnet
+          gateway: pubnet_gateway
   internet:
     driver: macvlan
     driver_opts:
@@ -40,8 +40,8 @@ networks:
     name: internet
     ipam:
       config:
-        - subnet: "172.31.50.0/24"
-          gateway: "172.31.50.254"
+        - subnet: internet_subnet
+          gateway: internet_gateway
 
 services:
   # PUBLIC NET
@@ -54,7 +54,7 @@ services:
       - NET_ADMIN
     entrypoint: er_b_entrypoint
     networks:
-      dmz_B:
+      dmz_b:
         ipv4_address: er_b_dmz_b
       pubnet:
         ipv4_address: er_b_pubnet
@@ -78,12 +78,12 @@ services:
       - net.ipv4.ip_forward=1
     cap_add:
       - NET_ADMIN
+    entrypoint: r_b_entrypoint
     networks:
-      internal_B:
+      internal_b:
         ipv4_address: r_b_internal_b
-      dmz_B:
+      dmz_b:
         ipv4_address: r_b_dmz_b
-    command: ["172.0.1.0/29", "172.0.1.3"]
   firewall:
     build: ./firewall
     container_name: firewall
@@ -91,41 +91,74 @@ services:
       - NET_ADMIN
     entrypoint: firewall_entrypoint
     networks:
-      dmz_B:
-        ipv4_address: firewall_dmz_B
+      dmz_b:
+        ipv4_address: firewall_dmz_b
+  ## VPN
+  ## IMPORTANT: The default gateway is hard-coded in the container's files. Be mindful of this when changing the IPs of stuff.
+  wireguard:
+    build: ./wireguard
+    container_name: wireguard
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Lisbon
+      - SERVERURL=wireguard_dmz_b
+      - SERVERPORT=51820
+      - PEERS=10
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.0.1.0
+      - ALLOWEDIPS=0.0.0.0/0
+      - LOG_CONFS=true
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    volumes:
+      - wireguard_config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    networks:
+      dmz_b:
+        ipv4_address: wireguard_dmz_b
+    restart: unless-stopped
   ## WEBAPP (deals with webapp net)
   webapp_worker1:
     build: ./webapp_worker
     container_name: webapp_worker1
     networks:
-      webapp_B:
+      webapp_b:
         ipv4_address: webapp_worker1_webapp_b
   webapp_worker2:
     build: ./webapp_worker
     container_name: webapp_worker2
     networks:
-      webapp_B:
+      webapp_b:
         ipv4_address: webapp_worker2_webapp_b
   webapp:
     build: ./webapp
     container_name: webapp
     cap_add:
       - NET_ADMIN
+    entrypoint: webapp_entrypoint
     networks:
-      webapp_B:
+      webapp_b:
         ipv4_address: webapp_webapp_b
-      dmz_B:
+      dmz_b:
         ipv4_address: webapp_dmz_b
-    command: ["172.0.1.0/29","172.0.1.2"]
 
   # INTERNAL
   dhcp_b:
     build: ./dhcp
     container_name: dhcp_b
+    cap_add:
+      - NET_ADMIN
+    entrypoint: dhcp_b_entrypoint
     networks:
-      internal_B:
+      internal_b:
         ipv4_address: dhcp_b_internal_b
-    command: ["10.0.2.", "1.1.1.1"]
   ## DB
   postgres:
     image: postgres:14
@@ -140,7 +173,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
-      internal_B:
+      internal_b:
         ipv4_address: postgres_internal_b
   pgadmin:
     image: dpage/pgadmin4
@@ -157,7 +190,7 @@ services:
     depends_on:
       - postgres
     networks:
-      internal_B:
+      internal_b:
         ipv4_address: pgadmin_internal_b
   ## EMPLOYEES
   webdev1:
@@ -166,7 +199,7 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
-      internal_B:
+      internal_b:
         ipv4_address: webdev1_internal_b
   webdev2:
     build: ./webdev
@@ -174,9 +207,9 @@ services:
     cap_add:
       - NET_ADMIN
     networks:
-      internal_B:
+      internal_b:
         ipv4_address: webdev2_internal_b
-
 volumes:
   db-data:
   pgadmin-data:
+  wireguard_config:
