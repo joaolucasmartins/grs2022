@@ -178,7 +178,7 @@
     "entrypoints": [
       {
         "path": "./entry.sh",
-        "commands": ["10.0.2.1"]
+        "commands": ["r_b_internal_b"]
       }
     ]
   },

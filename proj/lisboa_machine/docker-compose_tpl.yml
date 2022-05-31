@@ -155,6 +155,7 @@ services:
     container_name: nagios
     cap_add:
       - NET_ADMIN
+    entrypoint: nagios_entrypoint
     networks:
       internal_b:
         ipv4_address: nagios_internal_b
