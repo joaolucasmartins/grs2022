@@ -150,6 +150,14 @@ services:
         ipv4_address: webapp_dmz_b
 
   # INTERNAL
+  nagios:
+    build: ./nagios
+    container_name: nagios
+    cap_add:
+      - NET_ADMIN
+    networks:
+      internal_b:
+        ipv4_address: nagios_internal_b
   dhcp_b:
     build: ./dhcp
     container_name: dhcp_b
