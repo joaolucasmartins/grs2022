@@ -15,6 +15,7 @@ nwdiag {
     db [shape = database, address = "10.0.2.2"];
     pgadmin [shape = database, address = "10.0.2.3"];
     DHCP_B [shape = rectangle, address = "10.0.2.4"];
+    Nagios [shape = rectangle, address = "10.0.2.5"];
     Employee1 [shape = entity]
     Employee2 [shape = entity]
     Employee3 [shape = entity]

@@ -53,4 +53,4 @@ echo "9. Nagios check_http (webapp)"
 test_cmd sudo docker exec "nagios" /opt/nagios/libexec/check_http -I 172.0.1.5 2>/dev/null
 
 echo "10. Nagios interface"
-test_cmd sudo docker exec "webdev1" curl 10.0.2.10 -u nagiosadmin:nagios 2>/dev/null
+test_cmd sudo docker exec "webdev1" curl 10.0.2.5 -u nagiosadmin:nagios 2>/dev/null
