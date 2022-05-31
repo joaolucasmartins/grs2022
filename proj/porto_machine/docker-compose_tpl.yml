@@ -73,21 +73,6 @@ services:
     networks:
       dmz_c:
         ipv4_address: firewall_dmz_c
-  dns:
-    build: ./dns
-    container_name: dns
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - /etc/docker/compose/porto/dns/externals:/etc/bind/externals
-      - /etc/docker/compose/porto/dns/internals:/etc/bind/internals
-      - /etc/docker/compose/porto/dns/named.conf:/etc/bind/named.conf
-      - /etc/docker/compose/porto/dns/named.conf.local:/etc/bind/named.conf.local
-      - /etc/docker/compose/porto/dns/named.conf.options:/etc/bind/named.conf.options
-    entrypoint: dns_entrypoint
-    networks:
-      dmz_c:
-        ipv4_address: dns_dmz_c
   # Internal
   netmanager1:
     build: ./netmanager

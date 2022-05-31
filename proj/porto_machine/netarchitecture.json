@@ -102,20 +102,5 @@
         "commands": ["10.1.2.", "dns_dmz_c"]
       }
     ]
-  },
-  {
-    "name": "dns",
-    "entrypoints": [
-      {
-        "path": "./configDNS.sh",
-        "commands": ["dmz_c_subnet", "firewall_dmz_c"]
-      }
-    ],
-    "networks": [
-      {
-        "name": "dmz_c",
-        "ip": "172.1.1.5"
-      }
-    ]
   }
 ]
