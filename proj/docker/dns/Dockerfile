@@ -7,13 +7,13 @@ ENV LC_ALL C.UTF-8
 ARG DEB_VERSION=1:9.16.28-1+ubuntu20.04.1+isc+3
 
 # Install add-apt-repository command
-RUN apt-get -qqqy update && apt-get -qqqy dist-upgrade && apt-get -qqqy install --no-install-recommends apt-utils software-properties-common dctrl-tools
+RUN apt-get -qqqy update && apt-get -qqqy dist-upgrade && apt-get -qqqy install --no-install-recommends apt-utils software-properties-common dctrl-tools vim
 
 # Add the BIND 9 APT Repository
 RUN add-apt-repository -y ppa:isc/bind-esv
 
 # Install BIND 9
-RUN apt-get -qqqy update && apt-get -qqqy dist-upgrade && apt-get -qqqy install bind9=$DEB_VERSION bind9utils=$DEB_VERSION && apt-get -y install vim
+RUN apt-get -qqqy install bind9 bind9utils
 
 # Now remove the pkexec that got pulled as dependency to software-properties-common
 RUN apt-get --purge -y autoremove policykit-1
