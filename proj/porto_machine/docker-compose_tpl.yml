@@ -71,6 +71,15 @@ services:
     networks:
       dmz_c:
         ipv4_address: firewall_dmz_c
+  nagios:
+    build: ./nagios
+    container_name: nagios
+    cap_add:
+      - NET_ADMIN
+    entrypoint: nagios_entrypoint
+    networks:
+      internal_c:
+        ipv4_address: nagios_internal_c
   # Internal
   netmanager1:
     build: ./netmanager

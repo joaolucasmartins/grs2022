@@ -146,15 +146,6 @@ services:
         ipv4_address: webapp_dmz_b
 
   # INTERNAL
-  nagios:
-    build: ./nagios
-    container_name: nagios
-    cap_add:
-      - NET_ADMIN
-    entrypoint: nagios_entrypoint
-    networks:
-      internal_b:
-        ipv4_address: nagios_internal_b
   dhcp_b:
     build: ./dhcp
     container_name: dhcp_b
@@ -220,11 +211,11 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - /etc/docker/compose/porto/dns/externals:/etc/bind/externals
-      - /etc/docker/compose/porto/dns/internals:/etc/bind/internals
-      - /etc/docker/compose/porto/dns/named.conf:/etc/bind/named.conf
-      - /etc/docker/compose/porto/dns/named.conf.local:/etc/bind/named.conf.local
-      - /etc/docker/compose/porto/dns/named.conf.options:/etc/bind/named.conf.options
+      - /etc/docker/compose/lisboa/dns/externals:/etc/bind/externals
+      - /etc/docker/compose/lisboa/dns/internals:/etc/bind/internals
+      - /etc/docker/compose/lisboa/dns/named.conf:/etc/bind/named.conf
+      - /etc/docker/compose/lisboa/dns/named.conf.local:/etc/bind/named.conf.local
+      - /etc/docker/compose/lisboa/dns/named.conf.options:/etc/bind/named.conf.options
     entrypoint: dns_entrypoint
     networks:
       dmz_b:

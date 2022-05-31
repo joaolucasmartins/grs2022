@@ -168,21 +168,6 @@
     ]
   },
   {
-    "name": "nagios",
-    "networks": [
-      {
-        "name": "internal_b",
-        "ip": "10.0.2.5"
-      }
-    ],
-    "entrypoints": [
-      {
-        "path": "./entry.sh",
-        "commands": ["r_b_internal_b"]
-      }
-    ]
-  },
-  {
     "name": "dhcp_b",
     "networks": [
       {

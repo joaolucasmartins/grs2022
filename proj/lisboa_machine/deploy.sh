@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 test_cmd() {
   "$@" && printf "\033[01;32m%s\033[00m\n" "SUCCESS" || printf "\033[01;31m%s\033[00m\n" "FAILURE"
   echo
@@ -9,7 +11,10 @@ test_cmd() {
 
 # Clean up
 echo "Clean up"
-sudo systemctl stop docker-compose@lisboa
+if ! sudo systemctl stop docker-compose@lisboa; then
+  sudo systemctl status docker-compose@lisboa
+  exit 1
+fi
 
 # Deploy containers
 echo "Deploy containers"
@@ -45,12 +50,3 @@ test_cmd sudo docker exec "external_host_b" curl 172.31.255.253 2>/dev/null
 
 echo "7. webdev acess to porto firewall"
 test_cmd sudo docker exec "external_host_b" curl 172.1.1.3 2>/dev/null
-
-echo "8. Nagios check_nrpe (webapp)"
-test_cmd sudo docker exec "nagios" /opt/nagios/libexec/check_nrpe -H 172.0.1.5 2>/dev/null
-
-echo "9. Nagios check_http (webapp)"
-test_cmd sudo docker exec "nagios" /opt/nagios/libexec/check_http -I 172.0.1.5 2>/dev/null
-
-echo "10. Nagios interface"
-test_cmd sudo docker exec "webdev1" curl 10.0.2.5 -u nagiosadmin:nagios 2>/dev/null

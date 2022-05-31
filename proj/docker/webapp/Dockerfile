@@ -7,5 +7,4 @@ COPY nrpe.cfg /etc/nagios/nrpe.cfg
 COPY loadbalance.conf /etc/nginx/nginx.conf
 COPY entry.sh /entry.sh
 
-EXPOSE 80 443 5666
 ENTRYPOINT ["/bin/sh", "/entry.sh"]

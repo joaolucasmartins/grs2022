@@ -74,6 +74,21 @@
     ]
   },
   {
+    "name": "nagios",
+    "networks": [
+      {
+        "name": "internal_c",
+        "ip": "10.1.2.3"
+      }
+    ],
+    "entrypoints": [
+      {
+        "path": "./entry.sh",
+        "commands": ["r_c_internal_c"]
+      }
+    ]
+  },
+  {
     "name": "firewall",
     "networks": [
       {
