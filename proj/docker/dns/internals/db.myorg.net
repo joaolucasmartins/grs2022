@@ -1,14 +1,16 @@
 $TTL 2
-@       IN      SOA   ns.myorg.net. admin.myorg.net. (
-                2008111001
-                8H
-                2H
-                4W
-                1D)
+@        IN      SOA   ns.myorg.net. admin.myorg.net. (
+                 2008111001
+                 8H
+                 2H
+                 4W
+                 1D)
 
-@       IN      NS    ns.myorg.net.
+@        IN      NS    ns.myorg.net.
 
-@         IN      A     172.0.1.5
-www       IN      A     172.0.1.5
-basedados IN      A     10.0.2.2
-pgadmin   IN      A     10.0.2.3
+@        IN      A     172.0.1.5
+www      IN      A     172.0.1.5
+ns       IN      A     172.0.1.6
+*        IN      A     172.0.1.5
+database IN      A     10.0.2.2
+pgadmin  IN      A     10.0.2.3

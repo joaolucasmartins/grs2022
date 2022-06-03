@@ -114,7 +114,7 @@
     "entrypoints": [
       {
         "path": "./entry.sh",
-        "commands": ["10.1.2.", "1.1.1.1"]
+        "commands": ["10.1.2.", "172.0.1.6"]
       }
     ]
   }

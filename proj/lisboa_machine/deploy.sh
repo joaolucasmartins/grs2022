@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -50,3 +50,9 @@ test_cmd sudo docker exec "external_host_b" curl 172.31.255.253 2>/dev/null
 
 echo "7. webdev acess to porto firewall"
 test_cmd sudo docker exec "external_host_b" curl 172.1.1.3 2>/dev/null
+
+echo "8. webdev dns to database"
+test_cmd [ $(sudo docker exec "webdev1" dig database.myorg.net +short) == "10.0.2.2" ]
+
+echo "9. webdev dns to webapp"
+test_cmd [ $(sudo docker exec "webdev1" dig www.myorg.net +short) == "172.0.1.5" ]
