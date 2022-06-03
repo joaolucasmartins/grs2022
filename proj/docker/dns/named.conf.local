@@ -12,6 +12,12 @@ view "internal" {
 
 view "external" {
     match-clients { any; };
+
+    zone "myorg.net" {
+        type master;
+        file "/etc/bind/externals/db.myorg.net";
+    };
+
     // prime the server with knowledge of the root servers
     zone "." {
             type hint;
@@ -39,11 +45,5 @@ view "external" {
     zone "255.in-addr.arpa" {
             type master;
             file "/etc/bind/db.255";
-    };
-
-
-    zone "myorg.net" {
-        type master;
-        file "/etc/bind/externals/db.myorg.net";
     };
 };
