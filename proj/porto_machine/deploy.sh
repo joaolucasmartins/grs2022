@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -43,6 +43,6 @@ echo "5. Nagios interface"
 test_cmd sudo docker exec "netmanager1" curl 10.1.2.5 -u nagiosadmin:nagios 2>/dev/null
 
 echo "9. webdev dns to webapp"
-test_cmd [ $(sudo docker exec "netmanager1" dig myorg.net +short) == "172.0.1.5" ]
+test_cmd [ $(sudo docker exec "netmanager1" dig myorg.net +short) = "172.0.1.5" ]
 
 # DNS Tests here
