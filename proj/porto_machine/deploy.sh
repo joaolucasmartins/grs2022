@@ -40,7 +40,7 @@ echo "4. Nagios check_http (webapp)"
 test_cmd sudo docker exec "nagios" /opt/nagios/libexec/check_http -I 172.0.1.5 2>/dev/null
 
 echo "5. Nagios interface"
-test_cmd sudo docker exec "netmanager1" curl 10.1.2.5 -u nagiosadmin:nagios 2>/dev/null
+test_cmd sudo docker exec "netmanager1" curl 10.1.2.3 -u nagiosadmin:nagios 2>/dev/null
 
 echo "9. webdev dns to webapp"
 test_cmd [ $(sudo docker exec "netmanager1" dig myorg.net +short) = "172.0.1.5" ]

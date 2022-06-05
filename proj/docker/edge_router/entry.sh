@@ -9,10 +9,10 @@ other_net_gateway="$6"
 
 ip r del default
 ip r add default via "$dflt_gateway"
-ip r del "$dmz_ip"
+ip r del "$dmz_network"
 
 ip r add "$gateway" dev eth0
-ip r add "$dmz_ip" via "$gateway"
+ip r add "$dmz_network" via "$gateway"
 ip r add "$internal_network" via "$gateway"
 ip r add "$other_net" via "$other_net_gateway"
 

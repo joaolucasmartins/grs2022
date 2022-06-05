@@ -163,7 +163,7 @@
     "entrypoints": [
       {
         "path": "./entry.sh",
-        "commands": ["dmz_b_subnet", "r_b_dmz_b"]
+        "commands": ["dmz_b_subnet", "firewall_dmz_b"]
       }
     ]
   },
