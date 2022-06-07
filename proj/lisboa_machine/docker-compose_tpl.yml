@@ -172,12 +172,14 @@ services:
       internal_b:
         ipv4_address: postgres_internal_b
   pgadmin:
-    image: dpage/pgadmin4
+    build: pgadmin
     container_name: pgadmin_container
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: secret
       PGADMIN_LISTEN_PORT: 80
+    cap_add:
+      - NET_ADMIN
     restart: unless-stopped
     ports:
       - "80:80"
@@ -188,6 +190,7 @@ services:
     networks:
       internal_b:
         ipv4_address: pgadmin_internal_b
+    entrypoint: pgadmin_entrypoint
   ## EMPLOYEES
   webdev1:
     build: ./webdev

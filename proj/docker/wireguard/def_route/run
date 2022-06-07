@@ -3,6 +3,7 @@
 ip r del default
 # THIS IS HARD CODED HERE BECAUSE TEMPLATES DIDN'T SUPPORT THIS
 ip r add default via 172.0.1.2
+ip r add 10.0.2.0/24 via 172.0.1.2
 
 sleep infinity &
 

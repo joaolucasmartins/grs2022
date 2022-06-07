@@ -198,6 +198,15 @@
         "name": "internal_b",
         "ip": "10.0.2.3"
       }
+    ],
+    "entrypoints": [
+      {
+        "path": "/dflt_route.sh",
+        "commands": ["r_b_internal_b"]
+      },
+      {
+        "path": "/entrypoint.sh"
+      }
     ]
   },
   {

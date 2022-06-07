@@ -1,5 +1,5 @@
 :global etherid
-:for etherid from=3 to=24 step=1 do={ /interface bridge port remove numbers=[find interface="ether$etherid"] }
+:for etherid from=6 to=24 step=1 do={ /interface bridge port remove numbers=[find interface="ether$etherid"] }
 /interface bridge remove br-internet
 /interface bridge add name=br-internet
 /interface bridge remove br-lisboa
