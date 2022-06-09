@@ -1,7 +1,10 @@
 #!/bin/sh
 
 # if docker and compose are installed =>  skip install
-docker version && docker-compose version && exit 0
+command -v docker >/dev/null &&
+  command -v docker-compose >/dev/null &&
+  echo "Docker and docker-compose are already installed. Skipping..." &&
+  exit 0
 
 # remove old docker versions
 sudo apt-get -y remove docker docker-engine docker.io containerd runc
