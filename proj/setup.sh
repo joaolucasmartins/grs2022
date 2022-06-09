@@ -45,4 +45,6 @@ echo
 echo "Setup services' containers for deployment"
 ssh "$machine_ssh" sudo rm -rf "/etc/docker/compose/${name}"
 ssh "$machine_ssh" sudo mkdir -p "/etc/docker/compose/${name}"
+# Note: name var intended client-side resolving
+# Note: globbing server-side expanding
 ssh "$machine_ssh" sudo mv "~/docker/"* "/etc/docker/compose/${name}"
